@@ -11,4 +11,7 @@
   .btn-primary {
     @apply py-2 px-3 bg-primary text-secondary font-medium text-sm rounded hover:bg-secondary border-2 border-primary hover:text-primary transition-all;
   }
+  .btn-secondary {
+    @apply py-2 px-3 bg-secondary text-primary font-medium text-sm rounded hover:bg-primary border-2 border-primary hover:text-secondary transition-all;
+  }
 }
