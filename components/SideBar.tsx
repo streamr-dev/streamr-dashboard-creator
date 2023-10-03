@@ -9,7 +9,7 @@ export const SideBar = () => {
       <div className="w-full flex justify-center pb-4">
         <img className="h-11" src="logo.svg" alt="" />
       </div>
-      <nav className="pt-4">
+      <nav className="pt-6">
         <label className="label">General</label>
         <ul className="mt-2">
           <li>
