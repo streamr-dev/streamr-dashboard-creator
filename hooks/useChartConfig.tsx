@@ -3,12 +3,12 @@ import { ResponseError } from '@/types/interfaces';
 import { ChartConfig } from '@prisma/client';
 import useSWR from 'swr';
 
-export const useChartConfigs = () => {
+export const useChartConfig = (id: string) => {
   const {
-    data: chartConfigs,
+    data: chartConfig,
     error,
     isLoading,
-  } = useSWR<ChartConfig[], ResponseError>('/api/charts', fetcher);
+  } = useSWR<ChartConfig, ResponseError>(`/api/charts/${id}`, fetcher);
 
-  return { chartConfigs, error, isLoading };
+  return { chartConfig, error, isLoading };
 };

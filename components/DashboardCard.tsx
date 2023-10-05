@@ -12,6 +12,7 @@ import { useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { ChartConfig } from '@prisma/client';
 import { extractDataFromMessage } from '@/helper/dashboard-helper';
+import { WidgetModal } from './WidgetModal';
 
 Chart.register(
   ArcElement,
@@ -21,8 +22,16 @@ Chart.register(
   LineElement
 );
 
-export const DashboardCard = ({ config }: { config: ChartConfig }) => {
-  const { chartjsConfig, streamId, title, desc, labelPath, dataPath } = config;
+export const DashboardCard = ({
+  config,
+  showShareBtn = true,
+}: {
+  config: ChartConfig;
+  showShareBtn?: boolean;
+}) => {
+  const { chartjsConfig, streamId, title, desc, labelPath, dataPath, id } =
+    config;
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [chartData, setChartData] = useState<ChartData<'line'>>(
     JSON.parse(chartjsConfig)
@@ -57,13 +66,20 @@ export const DashboardCard = ({ config }: { config: ChartConfig }) => {
     <div className="w-full bg-secondary p-6 rounded">
       <div className="mb-2 flex justify-between">
         <h3 className="font-medium text-lg">{title}</h3>
-        <button>
-          <img src="icons/share.svg" alt="show widget code" />
-        </button>
+        {showShareBtn ? (
+          <button onClick={() => setIsModalOpen(true)}>
+            <img src="/icons/share.svg" alt="show widget code" />
+          </button>
+        ) : null}
       </div>
 
       <p className="text-sm mb-4">{desc}</p>
       <Line data={chartData} />
+      <WidgetModal
+        chartId={id}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 };
