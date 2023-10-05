@@ -2,11 +2,14 @@ import {
   ArcElement,
   CategoryScale,
   Chart,
+  ChartData,
   LineElement,
   LinearScale,
   PointElement,
 } from 'chart.js';
-import { Doughnut, Line } from 'react-chartjs-2';
+import streamr from '@/lib/streamr';
+import { useState } from 'react';
+import { Line } from 'react-chartjs-2';
 
 Chart.register(
   ArcElement,
@@ -17,32 +20,66 @@ Chart.register(
 );
 
 export const DashboardCard = () => {
-  const data = {
-    labels: ['1', '2', '3', '4', '5', '6', '7'],
+  const [chartData, setChartData] = useState<ChartData<'line'>>({
+    labels: [],
     datasets: [
       {
         label: 'My First Dataset',
-        data: [65, 59, 80, 81, 56, 55, 40],
+        data: [],
         fill: false,
-        borderColor: 'rgb(75, 192, 192)',
+        borderColor: '#FF5B02',
         tension: 0.1,
       },
     ],
+  });
+
+  const updateChart = (label: string, data: number) => {
+    setChartData((prevChartData) => {
+      const prevLabels = prevChartData.labels as string[];
+      const prevDataset = prevChartData.datasets[0];
+      const prevData = prevDataset.data as number[];
+
+      return {
+        labels: [...prevLabels, label],
+        datasets: [
+          {
+            ...prevDataset,
+            data: [...prevData, data],
+          },
+        ],
+      };
+    });
   };
+
+  const x = streamr.subscribe(
+    '0x7277c78c02a4192ef8c48f5f4c529278d0e447fc/kyve/kyve-1/0',
+    (msg: any) => {
+      const extractedData = {
+        stake_security: msg.metadata.stake_security,
+        block_height: msg.value.header.height,
+        amount_of_transactions: msg.value.data.txs.length,
+        timestamp: msg.metadata.finalized_at.timestamp,
+      };
+      if (extractedData.block_height && extractedData.timestamp) {
+        updateChart(extractedData.timestamp, extractedData.block_height);
+      }
+    }
+  );
+
   return (
     <div className="w-full bg-secondary p-6 rounded">
       <div className="mb-2 flex justify-between">
-        <h3 className="font-medium text-lg">Metric xyz</h3>
+        <h3 className="font-medium text-lg">Kyve Block Height</h3>
         <button>
           <img src="icons/share.svg" alt="show widget code" />
         </button>
       </div>
 
       <p className="text-sm mb-4">
-        Shows amount of nodes over time. This is a cool description to give the
-        data more context
+        Shows block height of transactions in Kyve network over time. This is a
+        cool description to give the data more context
       </p>
-      <Line data={data} />
+      <Line data={chartData} />
     </div>
   );
 };
