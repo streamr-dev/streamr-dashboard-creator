@@ -11,6 +11,7 @@ import streamr from '@/lib/streamr';
 import { useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { ChartConfig } from '@prisma/client';
+import { extractDataFromMessage } from '@/helper/dashboard-helper';
 
 Chart.register(
   ArcElement,
@@ -21,7 +22,7 @@ Chart.register(
 );
 
 export const DashboardCard = ({ config }: { config: ChartConfig }) => {
-  const { chartjsConfig, streamId, title, desc } = config;
+  const { chartjsConfig, streamId, title, desc, labelPath, dataPath } = config;
 
   const [chartData, setChartData] = useState<ChartData<'line'>>(
     JSON.parse(chartjsConfig)
@@ -46,14 +47,9 @@ export const DashboardCard = ({ config }: { config: ChartConfig }) => {
   };
 
   streamr.subscribe(streamId, (msg: any) => {
-    const extractedData = {
-      stake_security: msg.metadata.stake_security,
-      block_height: msg.value.header.height,
-      amount_of_transactions: msg.value.data.txs.length,
-      timestamp: msg.metadata.finalized_at.timestamp,
-    };
-    if (extractedData.block_height && extractedData.timestamp) {
-      updateChart(extractedData.timestamp, extractedData.block_height);
+    const { label, data } = extractDataFromMessage(msg, labelPath, dataPath);
+    if (label && data) {
+      updateChart(label, data);
     }
   });
 

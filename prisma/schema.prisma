@@ -28,6 +28,8 @@ model ChartConfig {
   streamId  String    @map("stream_id")
   title     String
   desc      String
+  labelPath String    @map("label_path")
+  dataPath  String    @map("data_path")
 }
 
 model User {

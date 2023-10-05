@@ -8,9 +8,25 @@ export default async function handle(
   try {
     switch (req.method) {
       case 'POST': {
-        const { type, chartjsConfig, streamId, title, desc } = req.body;
+        const {
+          type,
+          chartjsConfig,
+          streamId,
+          title,
+          desc,
+          labelPath,
+          dataPath,
+        } = req.body;
 
-        if (!type || !chartjsConfig || !streamId || !title || !desc) {
+        if (
+          !type ||
+          !chartjsConfig ||
+          !streamId ||
+          !title ||
+          !desc ||
+          !labelPath ||
+          !dataPath
+        ) {
           return res.status(400).json({
             error: 'Type, config, title, description and streamId are required',
           });
@@ -23,6 +39,8 @@ export default async function handle(
             streamId,
             title,
             desc,
+            labelPath,
+            dataPath,
           },
         });
 
