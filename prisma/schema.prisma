@@ -6,6 +6,28 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
+  seed    = "prisma/seed.ts"
+}
+
+enum ChartType {
+  LINE
+  BAR
+  PIE
+  DOUGHNUT
+  RADAR
+  POLAR_AREA
+  SCATTER
+  BUBBLE
+  AREA
+}
+
+model ChartConfig {
+  id        String    @id @default(cuid())
+  type      ChartType @map("chart_type")
+  chartjsConfig    String    @map("chartjs_config_json")
+  streamId  String    @map("stream_id")
+  title     String
+  desc      String
 }
 
 model User {
