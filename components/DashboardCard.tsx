@@ -8,7 +8,7 @@ import {
   PointElement,
 } from 'chart.js';
 import streamr from '@/lib/streamr';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { ChartConfig } from '@prisma/client';
 import { extractDataFromMessage } from '@/helper/dashboard-helper';
@@ -37,7 +37,17 @@ export const DashboardCard = ({
     JSON.parse(chartjsConfig)
   );
 
+  useEffect(() => {
+    streamr.subscribe(streamId, (msg: any) => {
+      const { label, data } = extractDataFromMessage(msg, labelPath, dataPath);
+      if (label && data) {
+        updateChart(label, data);
+      }
+    });
+  }, []);
+
   const updateChart = (label: string, data: number) => {
+    //To do: something wrong with the update. it's always 3 extra data points with each update
     setChartData((prevChartData) => {
       const prevLabels = prevChartData.labels as string[];
       const prevDataset = prevChartData.datasets[0];
@@ -54,13 +64,6 @@ export const DashboardCard = ({
       };
     });
   };
-
-  streamr.subscribe(streamId, (msg: any) => {
-    const { label, data } = extractDataFromMessage(msg, labelPath, dataPath);
-    if (label && data) {
-      updateChart(label, data);
-    }
-  });
 
   return (
     <div className="w-full bg-secondary p-6 rounded">
