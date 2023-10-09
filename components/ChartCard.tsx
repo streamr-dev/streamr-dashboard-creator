@@ -84,7 +84,10 @@ export const ChartCard = ({
       </div>
 
       <p className="text-sm mb-4">{desc}</p>
-      <Line data={chartData} />
+      <div className="bg-[url('/chart-background.svg')] bg-[length:200px_auto] bg-no-repeat bg-center">
+        <Line data={chartData} />
+      </div>
+
       <WidgetModal
         chartId={id}
         isOpen={isModalOpen}
