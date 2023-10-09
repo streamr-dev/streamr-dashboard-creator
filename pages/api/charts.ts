@@ -24,7 +24,6 @@ export default async function handle(
           !streamId ||
           !title ||
           !desc ||
-          !labelPath ||
           !dataPath
         ) {
           return res.status(400).json({

@@ -85,12 +85,11 @@ export const CreateChartModal = ({ isOpen, onClose }: ModalProps) => {
               Label Path (x-axis)
             </label>
             <input
-              required
               className="py-3 px-4 border-solid border border-background rounded"
               id="labelPath"
               name="labelPath"
               type="text"
-              placeholder="e.g. value.your.data.timestamp"
+              placeholder="e.g. value.your.data.blockId - leave empty to use stream timestamp"
             />
           </div>
           <div className="flex flex-col">

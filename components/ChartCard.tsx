@@ -42,8 +42,7 @@ export const ChartCard = ({
 
   useEffect(() => {
     streamr.subscribe(streamId, (msg: any, metadata) => {
-      let { label, data } = extractDataFromMessage(msg, labelPath, dataPath);
-      console.log(label, data);
+      let { label, data } = extractDataFromMessage(msg, dataPath, labelPath);
       if (data) {
         if (!label) {
           const date = new Date(metadata.timestamp);
