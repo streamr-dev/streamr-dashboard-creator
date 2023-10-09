@@ -38,6 +38,7 @@ export const DashboardCard = ({
   );
 
   useEffect(() => {
+    return;
     streamr.subscribe(streamId, (msg: any) => {
       const { label, data } = extractDataFromMessage(msg, labelPath, dataPath);
       if (label && data) {
@@ -47,7 +48,6 @@ export const DashboardCard = ({
   }, []);
 
   const updateChart = (label: string, data: number) => {
-    //To do: something wrong with the update. it's always 3 extra data points with each update
     setChartData((prevChartData) => {
       const prevLabels = prevChartData.labels as string[];
       const prevDataset = prevChartData.datasets[0];

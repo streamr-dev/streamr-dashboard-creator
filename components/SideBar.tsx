@@ -1,11 +1,18 @@
 import Link from 'next/link';
 import { signIn, signOut, useSession } from 'next-auth/react';
+import { useState } from 'react';
+import { CreateChartModal } from './CreateChartModal';
 
 export const SideBar = () => {
   const { data: session } = useSession();
+  const [isModalOpen, setIsModalOpen] = useState(true);
 
   return (
     <div className="h-full lg:w-[300px] py-4 bg-white absolute left-0 top-0 flex flex-col px-4">
+      <CreateChartModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      ></CreateChartModal>
       <div className="w-full flex justify-center pb-4">
         <img className="h-11" src="logo.svg" alt="" />
       </div>
@@ -25,8 +32,11 @@ export const SideBar = () => {
       </nav>
 
       <div className="mt-auto">
-        <button className="btn-primary w-full mt-auto">
-          + Add New Dashboard
+        <button
+          className="btn-primary w-full mt-auto"
+          onClick={() => setIsModalOpen(true)}
+        >
+          + Add New Chart
         </button>
         <div>
           <hr className="border-t-1 border-solid border-slate-300 my-4" />
