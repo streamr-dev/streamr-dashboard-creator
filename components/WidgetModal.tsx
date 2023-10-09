@@ -10,7 +10,7 @@ export const WidgetModal = ({ isOpen, onClose, chartId }: ModalProps) => {
   const [isCopied, setIsCopied] = useState(false);
 
   if (!isOpen) return null;
-  const iframeLink = `<iframe style="width: 100%; height: 100%;" src="https:localhost:3000/embed/chart/${chartId}"></iframe>`;
+  const iframeLink = `<iframe style="width: 100%; height: 100%;" src="https://streamr-dashboard-creator.vercel.app/embed/chart/${chartId}"></iframe>`;
 
   const handleCopy = async () => {
     try {
