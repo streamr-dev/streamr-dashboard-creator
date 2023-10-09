@@ -67,7 +67,7 @@ async function main() {
       title: 'Kyve Stake Security',
       desc: 'Shows stake security in Kyve network over time. This is a cool description to give the data more context',
       labelPath: 'metadata.finalized_at.timestamp',
-      dataPath: 'metadata.stake_security',
+      dataPath: 'metadata.stake_security.total_vote_power',
     },
   });
 }

@@ -9,7 +9,6 @@ if (process.env.NODE_ENV === 'production') {
     },
   });
 } else {
-  console.log('called');
   if (!global.streamr) {
     global.streamr = new StreamrClient({
       auth: {
