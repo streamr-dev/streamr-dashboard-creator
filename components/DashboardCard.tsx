@@ -11,7 +11,10 @@ import streamr from '@/lib/streamr';
 import { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { ChartConfig } from '@prisma/client';
-import { extractDataFromMessage } from '@/helper/dashboard-helper';
+import {
+  extractDataFromMessage,
+  formatDateToCustomFormat,
+} from '@/helper/dashboard-helper';
 import { WidgetModal } from './WidgetModal';
 
 Chart.register(
@@ -38,10 +41,15 @@ export const DashboardCard = ({
   );
 
   useEffect(() => {
-    return;
-    streamr.subscribe(streamId, (msg: any) => {
-      const { label, data } = extractDataFromMessage(msg, labelPath, dataPath);
-      if (label && data) {
+    streamr.subscribe(streamId, (msg: any, metadata) => {
+      let { label, data } = extractDataFromMessage(msg, labelPath, dataPath);
+      console.log(label, data);
+      if (data) {
+        if (!label) {
+          const date = new Date(metadata.timestamp);
+          const formattedDate = formatDateToCustomFormat(date);
+          label = formattedDate;
+        }
         updateChart(label, data);
       }
     });

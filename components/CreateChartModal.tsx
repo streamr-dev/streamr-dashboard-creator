@@ -1,9 +1,30 @@
+import { useChartConfigs } from '@/hooks/useChartConfigs';
+
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
 export const CreateChartModal = ({ isOpen, onClose }: ModalProps) => {
+  const { createChart, isCreating } = useChartConfigs();
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const title = formData.get('title') as string;
+    const desc = formData.get('desc') as string;
+    const streamId = formData.get('streamId') as string;
+    const labelPath = formData.get('labelPath') as string;
+    const dataPath = formData.get('dataPath') as string;
+    try {
+      await createChart(title, desc, streamId, labelPath, dataPath);
+
+      onClose();
+    } catch (error) {
+      console.error('Error creating the chart:', error);
+    }
+  };
+
   if (!isOpen) return null;
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
@@ -13,7 +34,13 @@ export const CreateChartModal = ({ isOpen, onClose }: ModalProps) => {
       ></div>
       <div className="relative flex flex-col z-10 bg-white p-6 rounded shadow-lg max-w-3xl w-full">
         <h2 className="font-medium text-xl">Create Chart</h2>
-        <form className="flex flex-col space-y-3 py-2" action="">
+        {isCreating ? <div>Loading...</div> : null}
+        <form
+          className={
+            (isCreating ? 'opacity-0' : '') + ` flex flex-col space-y-3 py-2`
+          }
+          onSubmit={handleSubmit}
+        >
           <div className="flex flex-col">
             <label className="mb-1 text-sm" htmlFor="title">
               Title

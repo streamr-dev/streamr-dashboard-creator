@@ -5,7 +5,18 @@ import { CreateChartModal } from './CreateChartModal';
 
 export const SideBar = () => {
   const { data: session } = useSession();
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isTooltipVisible, setIsTooltipVisible] = useState(false);
+
+  const handleMouseOver = (event: any) => {
+    if (event.currentTarget.disabled) {
+      setIsTooltipVisible(true);
+    }
+  };
+
+  const handleMouseOut = () => {
+    setIsTooltipVisible(false);
+  };
 
   return (
     <div className="h-full lg:w-[300px] py-4 bg-white fixed left-0 top-0 flex flex-col px-4">
@@ -32,12 +43,23 @@ export const SideBar = () => {
       </nav>
 
       <div className="mt-auto">
-        <button
-          className="btn-primary w-full mt-auto"
-          onClick={() => setIsModalOpen(true)}
-        >
-          + Add New Chart
-        </button>
+        <div className="relative group">
+          {isTooltipVisible && (
+            <span className="absolute text-xs bg-black text-white p-2 rounded-md -top-10 left-1/2 transform -translate-x-1/2">
+              Please login first
+            </span>
+          )}
+          <button
+            disabled={!session}
+            className="btn-primary w-full mt-auto disabled:opacity-75 disabled:cursor-not-allowed disabled:hover:bg-primary disabled:hover:text-secondary"
+            onClick={() => setIsModalOpen(true)}
+            onMouseOver={handleMouseOver}
+            onMouseOut={handleMouseOut}
+          >
+            + Add New Chart
+          </button>
+        </div>
+
         <div>
           <hr className="border-t-1 border-solid border-slate-300 my-4" />
           <label className="label">Profile</label>

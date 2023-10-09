@@ -7,6 +7,45 @@ export default async function handle(
 ) {
   try {
     switch (req.method) {
+      case 'POST': {
+        const {
+          type,
+          chartjsConfig,
+          streamId,
+          title,
+          desc,
+          labelPath,
+          dataPath,
+        } = req.body;
+
+        if (
+          !type ||
+          !chartjsConfig ||
+          !streamId ||
+          !title ||
+          !desc ||
+          !labelPath ||
+          !dataPath
+        ) {
+          return res.status(400).json({
+            error: 'Type, config, title, description and streamId are required',
+          });
+        }
+
+        const chartConfig = await prisma.chartConfig.create({
+          data: {
+            type,
+            chartjsConfig,
+            streamId,
+            title,
+            desc,
+            labelPath,
+            dataPath,
+          },
+        });
+
+        return res.json(chartConfig);
+      }
       case 'GET': {
         const allChartConfigs = await prisma.chartConfig.findMany();
         return res.json(allChartConfigs);
