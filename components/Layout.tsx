@@ -15,18 +15,16 @@ type Props = {
   title?: string;
 };
 
-export const Layout = ({
-  children,
-  title = 'This is the default title',
-}: Props) => (
+export const Layout = ({ children, title = 'Streamr Charts' }: Props) => (
   <div className={`${imbPlexSans.className} h-full w-full`}>
     <Head>
       <title>{title}</title>
       <meta charSet="utf-8" />
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      <link rel="icon" type="image/svg" href={'/logo.svg'} />
     </Head>
     <HeaderBar></HeaderBar>
     <SideBar></SideBar>
-    <div className="pr-8 pt-[100px] lg:pl-[332px]">{children}</div>
+    <div className="pr-8 pt-[100px] pb-6 lg:pl-[332px]">{children}</div>
   </div>
 );

@@ -38,6 +38,7 @@ export const DashboardCard = ({
   );
 
   useEffect(() => {
+    return;
     streamr.subscribe(streamId, (msg: any) => {
       const { label, data } = extractDataFromMessage(msg, labelPath, dataPath);
       if (label && data) {

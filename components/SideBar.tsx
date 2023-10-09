@@ -5,7 +5,7 @@ import { CreateChartModal } from './CreateChartModal';
 
 export const SideBar = () => {
   const { data: session } = useSession();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(true);
 
   return (
     <div className="h-full lg:w-[300px] py-4 bg-white fixed left-0 top-0 flex flex-col px-4">
@@ -14,7 +14,7 @@ export const SideBar = () => {
         onClose={() => setIsModalOpen(false)}
       ></CreateChartModal>
       <div className="w-full flex justify-center pb-4">
-        <img className="h-11" src="logo.svg" alt="" />
+        <img className="h-11" src="logo-text.svg" alt="" />
       </div>
       <nav className="pt-6">
         <label className="label">General</label>
