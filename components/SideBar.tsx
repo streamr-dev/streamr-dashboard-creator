@@ -8,7 +8,7 @@ export const SideBar = () => {
   const [isModalOpen, setIsModalOpen] = useState(true);
 
   return (
-    <div className="h-full lg:w-[300px] py-4 bg-white absolute left-0 top-0 flex flex-col px-4">
+    <div className="h-full lg:w-[300px] py-4 bg-white fixed left-0 top-0 flex flex-col px-4">
       <CreateChartModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
@@ -25,7 +25,7 @@ export const SideBar = () => {
               href=""
             >
               <img className="w-5" src="icons/dashboards.svg" alt="" />
-              <p>Dashboards</p>
+              <p>Charts</p>
             </Link>
           </li>
         </ul>

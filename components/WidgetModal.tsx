@@ -10,7 +10,7 @@ export const WidgetModal = ({ isOpen, onClose, chartId }: ModalProps) => {
   const [isCopied, setIsCopied] = useState(false);
 
   if (!isOpen) return null;
-  const iframeLink = `<iframe class="w-full h-full" src="http://localhost:3001/embed/chart/${chartId}"></iframe>`;
+  const iframeLink = `<iframe style="width: 100%; height: 100%;" src="https:localhost:3000/embed/chart/${chartId}"></iframe>`;
 
   const handleCopy = async () => {
     try {

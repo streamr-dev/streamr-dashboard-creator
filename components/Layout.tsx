@@ -27,6 +27,6 @@ export const Layout = ({
     </Head>
     <HeaderBar></HeaderBar>
     <SideBar></SideBar>
-    <div className="pr-8 pt-6 lg:pl-[332px]">{children}</div>
+    <div className="pr-8 pt-[100px] lg:pl-[332px]">{children}</div>
   </div>
 );
