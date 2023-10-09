@@ -25,7 +25,7 @@ Chart.register(
   LineElement
 );
 
-export const DashboardCard = ({
+export const ChartCard = ({
   config,
   showShareBtn = true,
 }: {

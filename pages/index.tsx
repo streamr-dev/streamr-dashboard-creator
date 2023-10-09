@@ -1,4 +1,4 @@
-import { DashboardCard } from '@/components/DashboardCard';
+import { ChartCard } from '@/components/ChartCard';
 import { Layout } from '@/components/Layout';
 import { useChartConfigs } from '@/hooks/useChartConfigs';
 
@@ -15,7 +15,7 @@ export default function Home() {
             <h1>No configs found</h1>
           ) : (
             chartConfigs.map((config) => (
-              <DashboardCard key={config.id} config={config} />
+              <ChartCard key={config.id} config={config} />
             ))
           )}
         </div>
