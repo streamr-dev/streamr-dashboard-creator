@@ -1,5 +1,7 @@
 import prisma from '@/lib/prisma';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { getServerSession } from 'next-auth';
+import { options } from '../auth/[...nextauth]';
 
 export default async function handle(
   req: NextApiRequest,
@@ -27,6 +29,11 @@ export default async function handle(
 
       case 'PATCH': {
         const { id } = req.query;
+
+        const session = await getServerSession(req, res, options);
+        if (!session) {
+          return res.status(401).json({ error: 'Not authenticated' });
+        }
 
         if (typeof id !== 'string') {
           return res.status(400).json({ error: 'Invalid Id' });

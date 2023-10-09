@@ -1,5 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import prisma from '@/lib/prisma';
+import { getServerSession } from 'next-auth';
+import { options } from './auth/[...nextauth]';
 
 export default async function handle(
   req: NextApiRequest,
@@ -8,6 +10,10 @@ export default async function handle(
   try {
     switch (req.method) {
       case 'POST': {
+        const session = await getServerSession(req, res, options);
+        if (!session) {
+          return res.status(401).json({ error: 'Not authenticated' });
+        }
         const {
           type,
           chartjsConfig,
