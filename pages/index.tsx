@@ -5,19 +5,19 @@ import { useChartConfigs } from '@/hooks/useChartConfigs';
 export default function Home() {
   const { chartConfigs, isLoading, error } = useChartConfigs();
 
-  if (!Array.isArray(chartConfigs)) {
-    return <div>No configs found</div>;
-  }
-
-  console.log(chartConfigs, error);
-
   return (
     <main>
       <Layout>
         <div className="w-full grid lg:grid-cols-1 gap-6">
-          {chartConfigs.map((config) => {
-            return <DashboardCard key={config.id} config={config} />;
-          })}
+          {isLoading ? (
+            <h1>Loading...</h1>
+          ) : !Array.isArray(chartConfigs) ? (
+            <h1>No configs found</h1>
+          ) : (
+            chartConfigs.map((config) => (
+              <DashboardCard key={config.id} config={config} />
+            ))
+          )}
         </div>
       </Layout>
     </main>

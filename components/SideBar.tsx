@@ -5,7 +5,7 @@ import { CreateChartModal } from './CreateChartModal';
 
 export const SideBar = () => {
   const { data: session } = useSession();
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <div className="h-full lg:w-[300px] py-4 bg-white fixed left-0 top-0 flex flex-col px-4">
