@@ -25,7 +25,7 @@ export const SideBar = () => {
         onClose={() => setIsModalOpen(false)}
       ></CreateChartModal>
       <div className="w-full flex justify-center pb-4">
-        <img className="h-11" src="logo-text.svg" alt="" />
+        <img className="h-11" src="/logo-text.svg" alt="" />
       </div>
       <nav className="pt-6">
         <label className="label">General</label>
@@ -33,10 +33,10 @@ export const SideBar = () => {
           <li>
             <Link
               className="flex flex-row space-x-2 bg-background px-4 py-3 rounded"
-              href=""
+              href="/"
             >
-              <img className="w-5" src="icons/dashboards.svg" alt="" />
-              <p>Charts</p>
+              <img className="w-5" src="/icons/dashboards.svg" alt="" />
+              <p>All Charts</p>
             </Link>
           </li>
         </ul>

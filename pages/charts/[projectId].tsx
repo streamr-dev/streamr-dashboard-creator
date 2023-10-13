@@ -1,19 +1,28 @@
 import { ChartCard } from '@/components/ChartCard';
 import { Layout } from '@/components/Layout';
 import { useChartConfigs } from '@/hooks/useChartConfigs';
+import { ChartConfig } from '@prisma/client';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
 export default function RouterProtocol() {
   const { chartConfigs, isLoading, error } = useChartConfigs();
+  const [filteredConfigs, setFilteredConfigs] = useState<ChartConfig[]>([]);
+  const router = useRouter();
+  const { projectId } = router.query;
 
-  const specificProjectId = 'ROUTER';
-
-  const filteredConfigs = Array.isArray(chartConfigs)
-    ? chartConfigs.filter((config) => config.projectId === specificProjectId)
-    : [];
+  useEffect(() => {
+    if (projectId && Array.isArray(chartConfigs)) {
+      const configs = chartConfigs.filter(
+        (config) => config.projectId === projectId
+      );
+      setFilteredConfigs(configs);
+    }
+  }, [chartConfigs, projectId]);
 
   return (
     <main>
-      <Layout>
+      <Layout headerTitle={'Charts: ' + (projectId as string).toUpperCase()}>
         <div className="w-full grid lg:grid-cols-1 gap-6">
           {isLoading ? (
             <h1>Loading...</h1>

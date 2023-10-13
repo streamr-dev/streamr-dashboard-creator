@@ -12,10 +12,15 @@ const imbPlexSans = IBM_Plex_Sans({
 
 type Props = {
   children?: ReactNode;
+  headerTitle?: string;
   title?: string;
 };
 
-export const Layout = ({ children, title = 'Streamr Charts' }: Props) => (
+export const Layout = ({
+  children,
+  title = 'Streamr Charts',
+  headerTitle = 'All Chart',
+}: Props) => (
   <div className={`${imbPlexSans.className} h-full w-full`}>
     <Head>
       <title>{title}</title>
@@ -23,7 +28,7 @@ export const Layout = ({ children, title = 'Streamr Charts' }: Props) => (
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       <link rel="icon" type="image/svg" href={'/logo.svg'} />
     </Head>
-    <HeaderBar></HeaderBar>
+    <HeaderBar headerTitle={headerTitle}></HeaderBar>
     <SideBar></SideBar>
     <div className="pr-8 pt-[100px] pb-6 lg:pl-[332px]">{children}</div>
   </div>
