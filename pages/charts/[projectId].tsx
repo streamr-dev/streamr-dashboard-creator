@@ -22,7 +22,7 @@ export default function RouterProtocol() {
 
   return (
     <main>
-      <Layout headerTitle={'Charts: ' + (projectId as string).toUpperCase()}>
+      <Layout headerTitle={'Charts: ' + projectId}>
         <div className="w-full grid lg:grid-cols-1 gap-6">
           {isLoading ? (
             <h1>Loading...</h1>
