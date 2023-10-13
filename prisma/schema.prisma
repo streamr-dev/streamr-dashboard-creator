@@ -29,7 +29,9 @@ model ChartConfig {
   title     String
   desc      String
   labelPath String?    @map("label_path")
+  labelIsTimestamp Boolean? @map("label_is_timestamp") @default(false)
   dataPath  String    @map("data_path")
+  projectId String?   @map("project_id")
 }
 
 model User {

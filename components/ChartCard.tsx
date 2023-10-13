@@ -14,7 +14,7 @@ import { ChartConfig } from '@prisma/client';
 import {
   extractDataFromMessage,
   formatDateToCustomFormat,
-} from '@/helper/dashboard-helper';
+} from '@/helper/dashboard-utils';
 import { WidgetModal } from './WidgetModal';
 
 Chart.register(
@@ -32,8 +32,16 @@ export const ChartCard = ({
   config: ChartConfig;
   showShareBtn?: boolean;
 }) => {
-  const { chartjsConfig, streamId, title, desc, labelPath, dataPath, id } =
-    config;
+  const {
+    chartjsConfig,
+    streamId,
+    title,
+    desc,
+    labelPath,
+    dataPath,
+    id,
+    labelIsTimestamp,
+  } = config;
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [chartData, setChartData] = useState<ChartData<'line'>>(
@@ -41,17 +49,25 @@ export const ChartCard = ({
   );
 
   useEffect(() => {
-    streamr.subscribe(streamId, (msg: any, metadata) => {
-      let { label, data } = extractDataFromMessage(msg, dataPath, labelPath);
-      if (data) {
-        if (!label) {
-          const date = new Date(metadata.timestamp);
-          const formattedDate = formatDateToCustomFormat(date);
-          label = formattedDate;
+    streamr.subscribe(
+      {
+        id: streamId,
+        resend: {
+          last: 10,
+        },
+      },
+      (msg: any, metadata) => {
+        let { label, data } = extractDataFromMessage(msg, dataPath, labelPath);
+        if (data) {
+          if (!label) {
+            label = formatDateToCustomFormat(new Date(metadata.timestamp));
+          } else if (labelIsTimestamp) {
+            label = formatDateToCustomFormat(new Date(label));
+          }
+          updateChart(label, data);
         }
-        updateChart(label, data);
       }
-    });
+    );
   }, []);
 
   const updateChart = (label: string, data: number) => {
