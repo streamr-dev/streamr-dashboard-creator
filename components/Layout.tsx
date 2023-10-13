@@ -30,6 +30,6 @@ export const Layout = ({
     </Head>
     <HeaderBar headerTitle={headerTitle}></HeaderBar>
     <SideBar></SideBar>
-    <div className="pr-8 pt-[100px] pb-6 lg:pl-[332px]">{children}</div>
+    <div className="px-8 pt-[100px] pb-6 lg:pl-[332px]">{children}</div>
   </div>
 );

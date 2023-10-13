@@ -19,7 +19,7 @@ export const SideBar = () => {
   };
 
   return (
-    <div className="h-full lg:w-[300px] py-4 bg-white fixed left-0 top-0 flex flex-col px-4">
+    <div className="h-full hidden first-letter: w-[300px] py-4 bg-white fixed left-0 top-0 lg:flex flex-col px-4">
       <CreateChartModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

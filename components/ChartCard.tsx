@@ -6,6 +6,7 @@ import {
   LineElement,
   LinearScale,
   PointElement,
+  scales,
 } from 'chart.js';
 import streamr from '@/lib/streamr';
 import { useEffect, useState } from 'react';
@@ -53,7 +54,7 @@ export const ChartCard = ({
       {
         id: streamId,
         resend: {
-          last: 10,
+          last: 0,
         },
       },
       (msg: any, metadata) => {
